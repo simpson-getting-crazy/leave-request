@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Panel\ManageUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,26 +30,27 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'example',
-    'as' => 'example.',
+    'prefix' => 'admin',
+    'as' => 'admin.',
     'middleware' => ['auth']
 ], function () {
-    Route::get('/dashboard', fn () => view('admin.pages.examples.dashboard'))->name('dashboard');
-    Route::get('/profile', fn () => view('admin.pages.examples.profile'))->name('profile');
+    Route::get('/dashboard', fn () => view('admin.pages.dashboard'))->name('dashboard');
+    Route::get('/profile', fn () => view('admin.pages.profile'))->name('profile');
 
-    Route::group([
-        'prefix' => 'users',
-        'as' => 'users.'
-    ], function () {
-        Route::group([
-            'prefix' => 'administrator',
-            'as' => 'administrator.',
-        ], function () {
-            Route::get('/', fn () => view('admin.pages.examples.users.administrator.index'))->name('index');
-            Route::get('/detail', fn () => view('admin.pages.examples.users.administrator.detail'))->name('detail');
-            Route::get('/create', fn () => view('admin.pages.examples.users.administrator.create'))->name('create');
-            Route::get('/edit', fn () => view('admin.pages.examples.users.administrator.edit'))->name('edit');
-            Route::delete('/delete', fn () => dd('deleted!'))->name('delete');
-        });
+    // Manage Users
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::get('/', [ManageUserController::class, 'index'])
+            ->name('index');
+        Route::get('/create', [ManageUserController::class, 'create'])
+            ->name('create');
+        Route::post('/store', [ManageUserController::class, 'store'])
+            ->name('store');
+        Route::get('/{id}/edit', [ManageUserController::class, 'edit'])
+            ->name('edit');
+        Route::put('/{id}/update', [ManageUserController::class, 'update'])
+            ->name('update');
+        Route::delete('/{id}/delete', [ManageUserController::class, 'delete'])
+            ->name('delete');
     });
+
 });

@@ -13,6 +13,34 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * The name of the folder where user profile images are stored.
+     *
+     * @var string
+     */
+    const FOLDER_NAME = 'avatar';
+
+    /**
+     * Defines the 'admin' role for users.
+     *
+     * @var string
+     */
+    const ADMIN_ROLE = 'admin';
+
+    /**
+     * Defines the 'employee' role for users.
+     *
+     * @var string
+     */
+    const EMPLOYEE_ROLE = 'employee';
+
+    /**
+     * Defines the 'manager' role for users.
+     *
+     * @var string
+     */
+    const MANAGER_ROLE = 'manager';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -42,13 +70,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    const FOLDER_NAME = 'avatar';
-
+    /**
+     * Scope a query to only include active users (those with a non-null email_verified_at value).
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeActive($query)
     {
         return $query->whereNotNull('email_verified_at');
     }
 
+    /**
+     * Get the URL for the user's profile image.
+     *
+     * @return string The URL for the user's profile image.
+     */
     public function getProfileImageURL()
     {
         return asset('storage/' . self::FOLDER_NAME . '/' . $this->image);

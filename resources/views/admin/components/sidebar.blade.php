@@ -20,40 +20,28 @@
             <span class="menu-header-text">Dashboard</span>
         </li>
 
-        <li class="menu-item @if(Route::is('example.dashboard')) active @endif">
-            <a href="{{ route('example.dashboard') }}" class="menu-link">
+        <!-- Dashboard -->
+        <li class="menu-item @if(Route::is('admin.dashboard')) active @endif">
+            <a href="{{ route('admin.dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-grid-alt"></i>
                 <div data-i18n="Dashboard">Dashboard</div>
             </a>
         </li>
 
-        <li class="menu-item @if(Route::is('example.profile')) active @endif">
-            <a href="{{ route('example.profile') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Profil Saya">Profil Saya</div>
+        <!-- Manage Users -->
+        <li class="menu-item">
+            <a href="{{ route('admin.user.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-grid-alt"></i>
+                <div data-i18n="Dashboard">Manage Users</div>
             </a>
         </li>
 
-        <!-- Users -->
-        <li class="menu-item @if(Route::is('example.users.*')) active open @endif">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-group"></i>
-                <div data-i18n="Users">Users</div>
+        <!-- Leave Request -->
+        <li class="menu-item">
+            <a href="{{ route('admin.dashboard') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-grid-alt"></i>
+                <div data-i18n="Dashboard">Leave Request</div>
             </a>
-
-            <ul class="menu-sub">
-                <li class="menu-item @if(Route::is(('example.users.administrator.*'))) active @endif">
-                    <a href="{{ route("example.users.administrator.index") }}" class="menu-link">
-                        <div data-i18n="Administrator">Administrator</div>
-                    </a>
-                </li>
-
-                <li class="menu-item @if(Route::is(('example.users.staff.*'))) active @endif">
-                    <a href="{{ route('example.users.administrator.index') }}" class="menu-link">
-                        <div data-i18n="Staff">Staff</div>
-                    </a>
-                </li>
-            </ul>
         </li>
     </ul>
 </aside>
